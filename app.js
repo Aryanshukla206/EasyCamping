@@ -109,7 +109,7 @@ app.use(
                 // "https://res.cloudinary.com/dtgtukgvf/", //SHOULD MATCH YOUR CLOUDINARY ACCOUNT! 
                 "https://images.unsplash.com/",
                 "https://res.cloudinary.com/douqbebwk/",
-                "https://res.cloudinary.com/dtgtukgvf/image/upload/v1737036343/YelpCamp/vhhmd0k2hoexh1reevzb.jpg",
+                "https://res.cloudinary.com/dtgtukgvf/",
                 "https://api.maptiler.com/",
             ],
             fontSrc: ["'self'", ...fontSrcUrls],
