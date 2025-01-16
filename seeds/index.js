@@ -5,18 +5,18 @@ const Campground = require('../models/campground');
 
 require('dotenv').config();
 
-// async function connectDB() {
-//     try {
-//         const db = await mongoose.connect(process.env.MONGO_URI);
-//         console.log("Connected to MongoDB Atlas successfully!");
-//     } catch (err) {
-//         console.error("Error connecting to MongoDB Atlas:", err.message);
-//         process.exit(1); // Exit process with failure
-//     }
-// }
-// connectDB()
-const dbURL = 'mongodb://localhost:27017/yelp-camp';
-mongoose.connect(dbURL);
+async function connectDB() {
+    try {
+        const db = await mongoose.connect(process.env.MONGO_URI);
+        console.log("Connected to MongoDB Atlas successfully!");
+    } catch (err) {
+        console.error("Error connecting to MongoDB Atlas:", err.message);
+        process.exit(1); // Exit process with failure
+    }
+}
+connectDB()
+// const dbURL = 'mongodb://localhost:27017/yelp-camp';
+mongoose.connect(db);
 
 const db = mongoose.connection;
 
