@@ -1,12 +1,13 @@
 const Campground = require('../models/campground');
 const {cloudinary} = require('../cloudinary');
 const maptilerClient = require("@maptiler/client");
+// if (process.env.NODE_ENV !== "production") {
+//     require('dotenv').config(); 
+// }
 maptilerClient.config.apiKey = process.env.MAPTILER_API_KEY;
 
-
-
 module.exports.index = async (req, res) => {
-    const campgrounds = await Campground.find({});
+    const campgrounds = await Campground.find({}); //.populate('popupText')
     console.log(campgrounds)
     res.render('campgrounds/index', { campgrounds})
 }
@@ -17,6 +18,7 @@ module.exports.renderNewForm = (req, res) => {
 
 module.exports.createCampground = async (req, res, next) => {
     const geoData = await maptilerClient.geocoding.forward(req.body.campground.location, { limit: 1 });
+    console.log(geoData);
     const campground = new Campground(req.body.campground);
     campground.geometry = geoData.features[0].geometry;
     campground.images = req.files.map(f => ({ url: f.path, filename: f.filename }));
@@ -24,6 +26,7 @@ module.exports.createCampground = async (req, res, next) => {
     await campground.save();
     console.log(campground);
     req.flash('success', 'Successfully made a new campground!');
+    res.redirect(`/campgrounds/${campground._id}`); // Redirect to the show page
 }
 
 module.exports.showCampground = async (req, res,) => {
@@ -39,8 +42,6 @@ module.exports.showCampground = async (req, res,) => {
         req.flash('error', 'Cannot find that campground!');
         return res.redirect('/campgrounds');
     }
-    
-    
     res.render('campgrounds/show', { campground });
 }
 

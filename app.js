@@ -11,24 +11,27 @@ const LocalStrategy = require('passport-local');
 const User = require('./models/user');
 const userRoutes = require('./routes/users');
 const campgroundRoutes = require('./routes/campgrounds');
+const helmet = require('helmet');
 const reviewRoutes = require('./routes/reviews');
-const { configDotenv } = require('dotenv');
+// const { configDotenv } = require('dotenv');
 
-configDotenv()
+// configDotenv()
 
 if (process.env.NODE_ENV !== "production") {
-    require('dotenv').config();
+    require('dotenv').config(); 
 }
-async function connectDB() {
-    try {
-        const db = await mongoose.connect(process.env.MONGO_URI);
-        console.log("Connected to MongoDB Atlas successfully!");
-    } catch (err) {
-        console.error("Error connecting to MongoDB Atlas:", err.message);
-        process.exit(1);
-    }
-}
-connectDB();
+// async function connectDB() {
+//     try {
+//         const db = await mongoose.connect(process.env.MONGO_URI);
+//         console.log("Connected to MongoDB Atlas successfully!");
+//     } catch (err) {
+//         console.error("Error connecting to MongoDB Atlas:", err.message);
+//         process.exit(1);
+//     }
+// }
+// connectDB();
+const dbURL = 'mongodb://localhost:27017/yelp-camp';
+mongoose.connect(dbURL);
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error:"));
 db.once("open", () => {
@@ -40,17 +43,21 @@ const app = express();
 app.engine('ejs', ejsMate)
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'))
+app.use(express.json())
 
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'public')))
 
 const sessionConfig = {
-    secret: 'thisshouldbeabettersecret!',
+    // store,
+    name: 'session',
+    secret : process.env.SECRET,
     resave: false,
     saveUninitialized: true,
     cookie: {
         httpOnly: true,
+        // secure: true,
         expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
         maxAge: 1000 * 60 * 60 * 24 * 7
     }
@@ -58,6 +65,59 @@ const sessionConfig = {
 
 app.use(session(sessionConfig))
 app.use(flash());
+app.use(helmet({contentSecurityPolicy : false}));
+
+const scriptSrcUrls = [
+    "https://stackpath.bootstrapcdn.com/",
+    // "https://api.tiles.mapbox.com/",
+    // "https://api.mapbox.com/",
+    "https://kit.fontawesome.com/",
+    "https://cdnjs.cloudflare.com/",
+    "https://cdn.jsdelivr.net",
+    "https://cdn.maptiler.com/", // add this
+];
+const styleSrcUrls = [
+    "https://kit-free.fontawesome.com/",
+    "https://stackpath.bootstrapcdn.com/",
+    // "https://api.mapbox.com/",
+    // "https://api.tiles.mapbox.com/",
+    "https://fonts.googleapis.com/",
+    "https://use.fontawesome.com/",
+    "https://cdn.jsdelivr.net",
+    "https://cdn.maptiler.com/", // add this
+];
+const connectSrcUrls = [
+    // "https://api.mapbox.com/",
+    // "https://a.tiles.mapbox.com/",
+    // "https://b.tiles.mapbox.com/",
+    // "https://events.mapbox.com/",
+    "https://api.maptiler.com/", // add this
+
+];
+const fontSrcUrls = [];
+app.use(
+    helmet.contentSecurityPolicy({
+        directives: {
+            defaultSrc: [],
+            connectSrc: ["'self'", ...connectSrcUrls],
+            scriptSrc: ["'unsafe-inline'", "'self'", ...scriptSrcUrls],
+            styleSrc: ["'self'", "'unsafe-inline'", ...styleSrcUrls],
+            workerSrc: ["'self'", "blob:"],
+            objectSrc: [],
+            imgSrc: [
+                "'self'",
+                "blob:",
+                "data:",
+                // "https://res.cloudinary.com/dtgtukgvf/", //SHOULD MATCH YOUR CLOUDINARY ACCOUNT! 
+                "https://images.unsplash.com/",
+                "https://res.cloudinary.com/douqbebwk/",
+                "https://res.cloudinary.com/dtgtukgvf/image/upload/v1737036343/YelpCamp/vhhmd0k2hoexh1reevzb.jpg",
+                "https://api.maptiler.com/",
+            ],
+            fontSrc: ["'self'", ...fontSrcUrls],
+        },
+    })
+);
 
 app.use(passport.initialize());
 app.use(passport.session());
