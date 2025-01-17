@@ -33,13 +33,14 @@
 ## Screenshots 📸  
 
 ### Home Page  
-![Home Page](https://i.imgur.com/mRmkomq.png)  
+<img src="https://i.imgur.com/mRmkomq.png" alt="Home Page" width="800" height="400" />  
 
 ### All Campgrounds  
-![Campground Details](https://i.imgur.com/pQJzhqC.png)  
+<img src="https://i.imgur.com/pQJzhqC.png" alt="All Campgrounds" width="800" height="400" />  
 
 ### Leave a Review  
-![Leave a Review](https://i.imgur.com/9C9eXQc.png)
+<img src="https://i.imgur.com/9C9eXQc.png" alt="Leave a Review" width="800" height="400" />  
+
 
 ## Getting Started 🚀  
 
