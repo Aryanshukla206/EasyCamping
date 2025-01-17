@@ -33,7 +33,7 @@
 ## Screenshots 📸  
 
 ### Home Page  
-![Home Page]([https://via.placeholder.com/800x400](https://drive.google.com/file/d/11k42u5EzZxSazfJC6s1X547qcLgu8id4/view?usp=sharing))  
+![Home Page](https://drive.google.com/file/d/11k42u5EzZxSazfJC6s1X547qcLgu8id4/view?usp=sharing)  
 
 ### Campground Details  
 ![Campground Details](https://via.placeholder.com/800x400)  
