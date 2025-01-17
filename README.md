@@ -36,7 +36,7 @@
 ![Home Page](https://imgur.com/a/CaoVjxX)  
 
 ### Campground Details  
-![Campground Details](https://imgur.com/a/4TwNpXY)  
+![Campground Details]([img]https://i.imgur.com/pQJzhqC.png[/img])  
 
 ### Leave a Review  
 ![Leave a Review](https://imgur.com/a/gyysxhc)  
