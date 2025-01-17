@@ -36,10 +36,10 @@
 ![Home Page](https://imgur.com/a/CaoVjxX)  
 
 ### Campground Details  
-![Campground Details](https://via.placeholder.com/800x400)  
+![Campground Details](https://imgur.com/a/4TwNpXY)  
 
 ### Leave a Review  
-![Leave a Review](https://via.placeholder.com/800x400)  
+![Leave a Review](https://imgur.com/a/gyysxhc)  
 
 ## Getting Started 🚀  
 
